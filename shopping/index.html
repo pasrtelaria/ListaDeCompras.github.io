@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #b6bee0 0%, #6c7cc5 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .add-item-section {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+
+        .add-item-section h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.3em;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .input-field {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .input-field label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .input-field input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+
+        .input-field input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-danger {
+            background: #e74c3c;
+            color: white;
+            padding: 8px 16px;
+            font-size: 0.9em;
+        }
+
+        .btn-danger:hover {
+            background: #c0392b;
+            transform: translateY(-1px);
+        }
+
+        .cart-section h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.3em;
+        }
+
+        .cart-items {
+            display: grid;
+            gap: 15px;
+        }
+
+        .cart-item {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .cart-item:hover {
+            border-color: #667eea;
+            transform: translateX(5px);
+        }
+
+        .item-info {
+            flex: 1;
+        }
+
+        .item-name {
+            font-size: 1.2em;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .item-quantity {
+            color: #666;
+            font-size: 0.95em;
+        }
+
+        .empty-cart {
+            text-align: center;
+            padding: 40px;
+            color: #999;
+            font-size: 1.1em;
+        }
+
+        .empty-cart::before {
+            content: "🛒";
+            display: block;
+            font-size: 4em;
+            margin-bottom: 15px;
+        }
+
+        .cart-summary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .cart-summary h3 {
+            font-size: 1.1em;
+            margin-bottom: 5px;
+        }
+
+        .cart-summary .count {
+            font-size: 2em;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🛒 Shopping Cart</h1>
+        </div>
+
+        <div class="content">
+            <div class="add-item-section">
+                <h2>Adiciona novo Item</h2>
+                <div class="input-group">
+                    <div class="input-field">
+                        <label for="itemName">Nome do Item</label>
+                        <input type="text" id="itemName" placeholder="ex. Maçãs">
+                    </div>
+                    <div class="input-field">
+                        <label for="itemQuantity">Quantidade</label>
+                        <input type="number" id="itemQuantity" placeholder="ex. 5" step="0.01" min="0">
+                    </div>
+                </div>
+                <button class="btn btn-primary" onclick="addItem()">Adicionar ao Carrinho</button>
+            </div>
+
+            <div class="cart-section">
+                <h2>Itens no Carrinho</h2>
+                <div id="cartItems" class="cart-items"></div>
+                <div class="cart-summary">
+                    <h3>Total de Itens no Carrinho</h3>
+                    <div class="count" id="itemCount">0</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Cart management system
+        const cart = [];
+
+        function addItem() {
+            const nameInput = document.getElementById('itemName');
+            const quantityInput = document.getElementById('itemQuantity');
+            
+            const name = nameInput.value.trim();
+            const quantity = parseFloat(quantityInput.value);
+
+            if (!name) {
+                alert('Selecione um nome válido para o item');
+                return;
+            }
+
+            if (!quantity || quantity <= 0) {
+                alert('Por favor, insira uma quantidade válida');
+                return;
+            }
+
+            const item = {
+                name: name,
+                quantity: quantity
+            };
+
+            cart.push(item);
+            
+            // Clear inputs
+            nameInput.value = '';
+            quantityInput.value = '';
+            
+            // Refresh display
+            displayCart();
+        }
+
+        function removeItem(index) {
+            cart.splice(index, 1);
+            displayCart();
+        }
+
+        function displayCart() {
+            const cartItemsDiv = document.getElementById('cartItems');
+            const itemCountDiv = document.getElementById('itemCount');
+
+            if (cart.length === 0) {
+                cartItemsDiv.innerHTML = '<div class="empty-cart">O carrinho está vazio</div>';
+                itemCountDiv.textContent = '0';
+                return;
+            }
+
+            cartItemsDiv.innerHTML = '';
+            
+            cart.forEach((item, index) => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'cart-item';
+                itemDiv.innerHTML = `
+                    <div class="item-info">
+                        <div class="item-name">${item.name}</div>
+                        <div class="item-quantity">Quantity: ${item.quantity}</div>
+                    </div>
+                    <button class="btn btn-danger" onclick="removeItem(${index})">Remove</button>
+                `;
+                cartItemsDiv.appendChild(itemDiv);
+            });
+
+            itemCountDiv.textContent = cart.length;
+        }
+
+        // Allow Enter key to add items
+        document.getElementById('itemQuantity').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                addItem();
+            }
+        });
+
+        // Initial display
+        displayCart();
+    </script>
+</body>
+</html>
