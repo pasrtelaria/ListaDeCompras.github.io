@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shopping Cart</title>
+    <title>Household Shopping List</title>
     <style>
         * {
             margin: 0;
@@ -201,12 +201,12 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>🛒 Shopping Cart</h1>
+            <h1>🛒 Shopping List</h1>
         </div>
 
         <div class="content">
             <div class="add-item-section">
-                <h2>Adiciona novo Item</h2>
+                <h2>Adicionar Novo Item</h2>
                 <div class="input-group">
                     <div class="input-field">
                         <label for="itemName">Nome do Item</label>
@@ -231,84 +231,6 @@
         </div>
     </div>
 
-    <script>
-        // Cart management system
-        const cart = [];
-
-        function addItem() {
-            const nameInput = document.getElementById('itemName');
-            const quantityInput = document.getElementById('itemQuantity');
-            
-            const name = nameInput.value.trim();
-            const quantity = parseFloat(quantityInput.value);
-
-            if (!name) {
-                alert('Selecione um nome válido para o item');
-                return;
-            }
-
-            if (!quantity || quantity <= 0) {
-                alert('Por favor, insira uma quantidade válida');
-                return;
-            }
-
-            const item = {
-                name: name,
-                quantity: quantity
-            };
-
-            cart.push(item);
-            
-            // Clear inputs
-            nameInput.value = '';
-            quantityInput.value = '';
-            
-            // Refresh display
-            displayCart();
-        }
-
-        function removeItem(index) {
-            cart.splice(index, 1);
-            displayCart();
-        }
-
-        function displayCart() {
-            const cartItemsDiv = document.getElementById('cartItems');
-            const itemCountDiv = document.getElementById('itemCount');
-
-            if (cart.length === 0) {
-                cartItemsDiv.innerHTML = '<div class="empty-cart">O carrinho está vazio</div>';
-                itemCountDiv.textContent = '0';
-                return;
-            }
-
-            cartItemsDiv.innerHTML = '';
-            
-            cart.forEach((item, index) => {
-                const itemDiv = document.createElement('div');
-                itemDiv.className = 'cart-item';
-                itemDiv.innerHTML = `
-                    <div class="item-info">
-                        <div class="item-name">${item.name}</div>
-                        <div class="item-quantity">Quantity: ${item.quantity}</div>
-                    </div>
-                    <button class="btn btn-danger" onclick="removeItem(${index})">Remove</button>
-                `;
-                cartItemsDiv.appendChild(itemDiv);
-            });
-
-            itemCountDiv.textContent = cart.length;
-        }
-
-        // Allow Enter key to add items
-        document.getElementById('itemQuantity').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                addItem();
-            }
-        });
-
-        // Initial display
-        displayCart();
-    </script>
+    <script src="js/app.js"></script>
 </body>
 </html>
