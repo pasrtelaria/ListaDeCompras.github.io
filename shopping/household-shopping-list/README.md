@@ -5,21 +5,22 @@ This project is a simple household shopping list application that allows users t
 ## Project Structure
 
 ```
-household-shopping-list
-├── public
+Shopping
+├── docs
 │   ├── index.html        # HTML structure for the shopping list application
 │   └── js
 │       └── app.js       # Client-side JavaScript for managing the shopping cart
-├── src
-│   ├── server.js        # Entry point for the server-side application
-│   ├── db.js            # Database connection and interaction functions
-│   └── routes
-│       └── items.js     # API routes for managing shopping cart items
-├── migrations
-│   └── schema.sql       # SQL schema for the database
-├── .env                 # Environment variables for configuration
-├── package.json         # npm configuration file with dependencies
-└── README.md            # Documentation for the project
+├──household-shopping-list
+│   ├── src
+│   │   ├── server.js        # Entry point for the server-side application
+│   │   ├── db.js            # Database connection and interaction functions
+│   │   └── routes
+│   │       └── items.js     # API routes for managing shopping cart items
+│   ├── migrations
+│   │   └── schema.sql       # SQL schema for the database
+│   ├── .env                 # Environment variables for configuration
+│   ├── package.json         # npm configuration file with dependencies
+│   └── README.md            # Documentation for the project
 ```
 
 ## Setup Instructions
